@@ -1,3 +1,5 @@
+// Good info here:
+// https://webrtc.github.io/samples/src/content/peerconnection/webaudio-input/
 // Websocket for offer/answer transfer
 const socket = io.connect('/');
 
@@ -15,7 +17,7 @@ const infoDiv = document.getElementById('info');
 
 // http://rtoy.github.io/webaudio-hacks/tests/osc.html
 // Audio variables
-sample_rate = 44100; // MUST BE 44.1
+sample_rate = 44100;
 bit_depth = 16;
 buffer_size = 256;
 
@@ -24,6 +26,8 @@ buffer_size = 256;
 // https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
 const config = {
     iceServers: [{
+        // This will have to be configured to a server near you.
+        // Or wire it to the local network re: the WebRTC protocol
             urls: 'stun:stun.l.google.com:19302'
         },
         //
@@ -45,7 +49,7 @@ const pc = new RTCPeerConnection(config);
 
 const context = new AudioContext({
     sampleRate: sample_rate,
-    latencyHint: 'interactive',
+    latencyHint: 'interactive', // Lower latency option
     channelCount: 2
 });
 
@@ -56,7 +60,7 @@ let source;
 const otherVideoStream = document.getElementById('otherVideoTag')
 const handleVideo = function (streamVid) {
 
-    // // UNCOMMENT TO HAVE MONITORING ON HOST!  This is probably the way to capture host media and mix together, preventing an outboard solution for each user to stream their own audio into the space.
+    
     source = context.createMediaStreamSource(streamVid);
     // source.connect(context.destination);
 
@@ -78,13 +82,12 @@ pc.ontrack = e => {
             // THIS IS THE VIDEO BUT IT ALSO SENDS AUDIO
             // // This is the audio and video stream, find a way to just send video here without original audio.
             otherVideoStream.srcObject = e.streams[0];
-            // otherVideoStream.connect(context.destination); // DOESNT WORK
+            // otherVideoStream.connect(context.destination);
         }
-
-
-        // This is the incoming audio stream!  This is where you can build the audio processing core
-        // let source = context.createMediaStreamSource(e.streams[0]); // Stream
     }
+
+                
+    
 }
 
 
@@ -118,8 +121,8 @@ function getDevices() {
             deviceSelect.options[deviceSelect.options.length] = new Option(device.label);
             inputDeviceArray.push(device.deviceId);
 
-            // console.log(device.kind + ": " + device.label +
-            //   " id = " + device.deviceId);
+            console.log(device.kind + ": " + device.label +
+              " id = " + device.deviceId);
         });
 
         function chooseDevice() {
