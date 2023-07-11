@@ -12,9 +12,6 @@ const offerButton = document.getElementById('offer-button');
 const infoDiv = document.getElementById('info');
 
 
-
-
-
 // http://rtoy.github.io/webaudio-hacks/tests/osc.html
 // Audio variables
 sample_rate = 44100;
@@ -59,9 +56,10 @@ let source;
 
 const otherVideoStream = document.getElementById('otherVideoTag')
 const handleVideo = function (streamVid) {
-
+    
     
     source = context.createMediaStreamSource(streamVid);
+    
     // source.connect(context.destination);
 
     document.getElementById('base-latency-div').innerText = 'Base Latency (in seconds): ' + context.baseLatency;
@@ -70,19 +68,18 @@ const handleVideo = function (streamVid) {
     pc.addTrack(streamVid.getVideoTracks()[0], streamVid); // This shows video. The capture is automatic.
 }
 let counter = 0;
+
+// This is where you will wire the audio stream to the output.  This currently isn't working on my setup but I can keep picking at it later.
+// You may have this set up a different way, and this was originally optimized for streaming the browser as an audio source, not mic input.
 pc.ontrack = e => {
     counter++;
     // Prevent double load
     if (counter == 2) {
 
-
-
         e.track.onunmute = () => {
-
-            // THIS IS THE VIDEO BUT IT ALSO SENDS AUDIO
-            // // This is the audio and video stream, find a way to just send video here without original audio.
-            otherVideoStream.srcObject = e.streams[0];
-            // otherVideoStream.connect(context.destination);
+            console.log(e);                        
+            otherVideoStream.srcObject = e.streams[0];            
+            
         }
     }
 
@@ -121,8 +118,8 @@ function getDevices() {
             deviceSelect.options[deviceSelect.options.length] = new Option(device.label);
             inputDeviceArray.push(device.deviceId);
 
-            console.log(device.kind + ": " + device.label +
-              " id = " + device.deviceId);
+            // console.log(device.kind + ": " + device.label +
+            //   " id = " + device.deviceId);
         });
 
         function chooseDevice() {
@@ -151,7 +148,7 @@ startVideoButton.onclick = function () {
             sampleRate: sample_rate,
             sampleSize: bit_depth,
             latency: 0,
-            deviceId: inputDeviceId,
+            deviceId: inputDeviceId,            
             channelCount: 2,
             echoCancellation: false,
             noiseSuppression: false,
@@ -180,8 +177,7 @@ offerButton.disabled = true;
 // Coordinates the handshake
 offerButton.onclick = async function createOffer() {
     document.getElementById('message-div').innerText = 'Connecting...';
-    // startButton.disabled = false;
-    // receiveButton.disabled = false;      
+
     await pc.setLocalDescription(await pc.createOffer());
     pc.onicecandidate = ({
         candidate

@@ -86,9 +86,6 @@ inputDeviceArray = [];
 inputDeviceId = null;
 
 
-
-
-
 function setAudioValues() {
     sample_rate = Number(document.getElementById('sample-rate').value);
     bit_depth = Number(document.getElementById('bit-depth').value);
