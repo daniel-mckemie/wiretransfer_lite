@@ -1,0 +1,100 @@
+/* trautonium styling */
+
+.container {
+  margin: auto;
+  width: 50%;
+  border: 3px solid black;
+  padding: 10px;
+}
+.module {
+  border-style: solid;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+/* ondes-martenot styling */
+.container-ondes {
+  margin: auto;
+  width: 60%;
+  border: 3px solid black;
+  padding: 10px;
+}
+
+#ondes-osc-wrapper {
+  padding-left: 10em;
+}
+
+#main-oscillator {
+  width: 75%;
+}
+
+#ondes-mixer #speaker-controls {
+  padding-left: 5em;
+}
+
+#mixer-labels {
+  padding-left: 5em;
+}
+
+input[type="range"][orient="vertical"] {
+  writing-mode: bt-lr; /* IE */
+  appearance: slider-vertical;
+  -webkit-appearance: slider-vertical; /* Chromium */
+  width: 8px;
+  height: 175px;
+  padding: 50px;
+}
+
+.score-video-box {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.child {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+/* .container-score {
+  display: flex;
+  flex-direction: row;
+} */
+
+.all-players-imgs {
+  opacity: 75%;
+  height: 100%;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#player1 {
+  background-color: lightblue;
+  height: 33vh;
+  width: 17vw;
+  /* top: 0%;
+  left: 0%;
+  position: absolute; */
+  visibility: hidden;
+}
+
+#player2 {
+  background-color: lightcoral;
+  height: 33vh;
+  width: 17vw;
+  /* top: 0%;
+  left: 25%;
+  position: absolute; */
+  visibility: hidden;
+}
